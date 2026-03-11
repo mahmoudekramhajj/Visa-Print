@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>باب الحجوزات | خدمة استخراج التأشيرات الآلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #0D4A3A;
+  --green-light: #14735A;
+  --gold: #C8A84E;
+  --gold-light: #E8D59A;
+  --cream: #FAF8F2;
+  --dark: #1A1A1A;
+  --gray: #6B7280;
+  --white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--green);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(200,168,78,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(200,168,78,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Geometric pattern overlay */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8A84E' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.brand-name {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+  animation: fadeUp 0.8s ease both;
+}
+
+.brand-sub {
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s ease 0.15s both;
+}
+
+.hero-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--gold-light);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-desc {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  animation: fadeUp 0.8s ease 0.45s both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gold);
+  color: var(--green);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 1rem 2.5rem;
+  border-radius: 60px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.hero-cta:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s infinite 1.5s;
+  z-index: 2;
+}
+
+.scroll-hint svg {
+  width: 28px;
+  height: 28px;
+  stroke: rgba(255,255,255,0.4);
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ─── SECTIONS ─── */
+section {
+  padding: 5rem 2rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-badge {
+  display: inline-block;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 1.2rem;
+  border-radius: 30px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: var(--green);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.section-desc {
+  font-size: 1.1rem;
+  color: var(--gray);
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* ─── PROBLEM ─── */
+.problem {
+  background: var(--white);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.problem-card {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.problem-card:hover { transform: translateY(-4px); }
+
+.problem-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.problem-card h3 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #991B1B;
+  margin-bottom: 0.5rem;
+}
+
+.problem-card p {
+  color: #7F1D1D;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+/* ─── SOLUTION ─── */
+.solution { background: var(--cream); }
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.feature {
+  background: var(--white);
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gold);
+  border-radius: 0 0 4px 4px;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  transform-origin: top;
+}
+
+.feature:hover::before { transform: scaleY(1); }
+.feature:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.feature h3 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.5rem;
+}
+
+.feature p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ─── COMPARISON ─── */
+.comparison { background: var(--white); }
+
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 3rem;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.compare-table thead th {
+  background: var(--green);
+  color: var(--white);
+  padding: 1.2rem 1.5rem;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.compare-table tbody td {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.compare-table tbody tr:hover { background: #F9FAFB; }
+
+.badge-good {
+  display: inline-block;
+  background: #ECFDF5;
+  color: #065F46;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.badge-bad {
+  display: inline-block;
+  background: #FEF2F2;
+  color: #991B1B;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ─── PRICING ─── */
+.pricing { background: var(--green); color: var(--white); }
+.pricing .section-badge { background: rgba(255,255,255,0.15); color: var(--gold); }
+.pricing .section-title { color: var(--white); }
+.pricing .section-desc { color: rgba(255,255,255,0.7); }
+
+.price-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.price-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.price-card:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-6px);
+}
+
+.price-card.featured {
+  background: rgba(200,168,78,0.15);
+  border-color: var(--gold);
+  transform: scale(1.02);
+}
+
+.price-card.featured:hover { transform: scale(1.02) translateY(-6px); }
+
+.price-label {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.price-pilgrims {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.5rem;
+}
+
+.price-amount {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+}
+
+.price-amount span {
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.price-per {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 1.5rem;
+  opacity: 0.4;
+}
+
+.price-feature {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.4rem;
+}
+
+/* ─── PAYMENT ─── */
+.payment {
+  background: var(--cream);
+}
+
+.payment-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.payment-step {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  border: 2px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+.payment-step:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+}
+
+.payment-percent {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.payment-percent span {
+  font-size: 1.5rem;
+  color: var(--gold);
+}
+
+.payment-step h3 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.payment-step p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ─── HOW IT WORKS ─── */
+.how { background: var(--white); }
+
+.steps {
+  margin-top: 3rem;
+  display: grid;
+  gap: 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 2rem 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.step:last-child { border-bottom: none; }
+
+.step-num {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+.step h3 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.4rem;
+}
+
+.step p {
+  color: var(--gray);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ─── CTA / CONTACT ─── */
+.cta {
+  background: var(--green);
+  text-align: center;
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(200,168,78,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cta-content { position: relative; z-index: 2; }
+
+.cta h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gold);
+  color: var(--green);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 1.1rem 2.5rem;
+  border-radius: 60px;
+  text-decoration: none;
+  direction: ltr;
+  transition: all 0.3s ease;
+}
+
+.cta-phone:hover {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.cta-phone svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0A3A2D;
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-8px); }
+  60% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .problem-grid,
+  .payment-steps { grid-template-columns: 1fr; }
+  
+  .price-cards { grid-template-columns: 1fr 1fr; }
+  
+  .step { grid-template-columns: 56px 1fr; gap: 1rem; }
+  .step-num { width: 48px; height: 48px; font-size: 1.2rem; border-radius: 12px; }
+  
+  section { padding: 3.5rem 1.5rem; }
+  
+  .compare-table { font-size: 0.85rem; }
+  .compare-table thead th,
+  .compare-table tbody td { padding: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .price-cards { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="brand-name">باب الحجوزات</div>
+    <div class="brand-sub">BAB AL-HOJOZAT</div>
+    <h1 class="hero-title">خدمة استخراج التأشيرات الآلي</h1>
+    <p class="hero-desc">نستخرج جميع تأشيرات حجاجك تلقائياً من موقع وزارة الخارجية — خلال ساعات بدلاً من أسابيع</p>
+    <a href="#contact" class="hero-cta">
+      <span>تواصل معنا الآن</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l-7 7 7 7"/></svg>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">المشكلة</span>
+      <h2 class="section-title">استخراج التأشيرات يدوياً = هدر للوقت والجهد</h2>
+      <p class="section-desc">كل تأشيرة تستغرق 3 دقائق من البحث والنسخ والطباعة يدوياً من موقع وزارة الخارجية</p>
+    </div>
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <div class="problem-icon">⏱️</div>
+        <h3>وقت ضائع</h3>
+        <p>10,000 حاج = أكثر من 500 ساعة عمل يدوي. هذا يعني فريق كامل لمدة شهر فقط لاستخراج التأشيرات.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">⚠️</div>
+        <h3>أخطاء بشرية</h3>
+        <p>النسخ اليدوي يُنتج 2-5% أخطاء في أرقام التأشيرات — مما يسبب مشاكل عند الفنادق ونقاط التفتيش.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📄</div>
+        <h3>طباعة يدوية</h3>
+        <p>كل PDF تأشيرة يحتاج تحميل وحفظ وتنظيم يدوياً — عملية مرهقة ومعرضة للخطأ.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">💰</div>
+        <h3>تكلفة عالية</h3>
+        <p>توظيف فريق موسمي لاستخراج التأشيرات يكلف عشرات الآلاف من الريالات سنوياً.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">الحل</span>
+      <h2 class="section-title">أتمتة كاملة — من Excel إلى PDF</h2>
+      <p class="section-desc">ترسل لنا ملف Excel ببيانات الحجاج، ونُرجع لك كل شيء جاهزاً</p>
+    </div>
+    <div class="features reveal">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Excel محدّث بالتأشيرات</h3>
+        <p>رقم التأشيرة يُضاف تلقائياً في السطر المتوافق مع كل حاج في ملف Excel</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📑</div>
+        <h3>PDF لكل تأشيرة</h3>
+        <p>صورة PDF كاملة لكل تأشيرة جاهزة للطباعة وتسليم الفنادق</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📁</div>
+        <h3>ملفات منظمة</h3>
+        <p>ملفات PDF مرتبة بحسب رقم الجواز لسهولة البحث والتسليم</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <h3>تقرير تفصيلي</h3>
+        <p>تقرير بحالة كل تأشيرة: ناجح، فشل، أو غير موجود — شفافية كاملة</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>سرعة فائقة</h3>
+        <p>آلاف التأشيرات تُستخرج خلال ساعات بدلاً من أسابيع العمل اليدوي</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎯</div>
+        <h3>دقة 100%</h3>
+        <p>استخراج مباشر من موقع الوزارة — لا نسخ يدوي ولا أخطاء بشرية</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">المقارنة</span>
+      <h2 class="section-title">الفرق واضح</h2>
+    </div>
+    <table class="compare-table reveal">
+      <thead>
+        <tr>
+          <th></th>
+          <th>يدوياً</th>
+          <th>مع خدمتنا</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>10,000 تأشيرة</strong></td>
+          <td><span class="badge-bad">+500 ساعة عمل</span></td>
+          <td><span class="badge-good">أقل من 12 ساعة</span></td>
+        </tr>
+        <tr>
+          <td><strong>50,000 تأشيرة</strong></td>
+          <td><span class="badge-bad">شهر كامل × 10 موظفين</span></td>
+          <td><span class="badge-good">أقل من 3 أيام</span></td>
+        </tr>
+        <tr>
+          <td><strong>نسبة الخطأ</strong></td>
+          <td><span class="badge-bad">2-5% أخطاء نسخ</span></td>
+          <td><span class="badge-good">0% — استخراج مباشر</span></td>
+        </tr>
+        <tr>
+          <td><strong>جاهزية PDF</strong></td>
+          <td><span class="badge-bad">تحميل يدوي لكل ملف</span></td>
+          <td><span class="badge-good">جميع الملفات جاهزة فوراً</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">التسعير</span>
+      <h2 class="section-title">باقات تناسب حجم عملك</h2>
+      <p class="section-desc">كلما زاد العدد، انخفض سعر التأشيرة الواحدة</p>
+    </div>
+    <div class="price-cards reveal">
+      <div class="price-card">
+        <div class="price-label">أساسية</div>
+        <div class="price-pilgrims">حتى 5,000 حاج</div>
+        <div class="price-amount">5,000 <span>ريال</span></div>
+        <div class="price-per">1.00 ريال / تأشيرة</div>
+        <div class="price-divider"></div>
+        <div class="price-feature">✓ ملف Excel محدّث</div>
+        <div class="price-feature">✓ ملفات PDF كاملة</div>
+        <div class="price-feature">✓ تقرير الحالة</div>
+      </div>
+      <div class="price-card featured">
+        <div class="price-label">متوسطة ⭐</div>
+        <div class="price-pilgrims">5,001 — 20,000 حاج</div>
+        <div class="price-amount">15,000 <span>ريال</span></div>
+        <div class="price-per">0.75 ريال / تأشيرة</div>
+        <div class="price-divider"></div>
+        <div class="price-feature">✓ ملف Excel محدّث</div>
+        <div class="price-feature">✓ ملفات PDF كاملة</div>
+        <div class="price-feature">✓ تقرير الحالة</div>
+      </div>
+      <div class="price-card">
+        <div class="price-label">كبيرة</div>
+        <div class="price-pilgrims">20,001 — 50,000 حاج</div>
+        <div class="price-amount">30,000 <span>ريال</span></div>
+        <div class="price-per">0.60 ريال / تأشيرة</div>
+        <div class="price-divider"></div>
+        <div class="price-feature">✓ ملف Excel محدّث</div>
+        <div class="price-feature">✓ ملفات PDF كاملة</div>
+        <div class="price-feature">✓ تقرير الحالة</div>
+      </div>
+      <div class="price-card">
+        <div class="price-label">مؤسسية</div>
+        <div class="price-pilgrims">+50,000 حاج</div>
+        <div class="price-amount">تسعير <span>خاص</span></div>
+        <div class="price-per">يبدأ من 0.50 ريال / تأشيرة</div>
+        <div class="price-divider"></div>
+        <div class="price-feature">✓ كل المميزات</div>
+        <div class="price-feature">✓ أولوية في التنفيذ</div>
+        <div class="price-feature">✓ دعم مخصص</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:rgba(255,255,255,0.45); font-size:0.85rem; margin-top:1.5rem;">
+      * الأسعار لا تشمل ضريبة القيمة المضافة
+    </p>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">شروط الدفع</span>
+      <h2 class="section-title">دفع مريح وآمن</h2>
+    </div>
+    <div class="payment-steps reveal">
+      <div class="payment-step">
+        <div class="payment-percent">50<span>%</span></div>
+        <h3>عند الاتفاق</h3>
+        <p>تدفع النصف عند الاتفاق وتسليم ملف بيانات الحجاج</p>
+      </div>
+      <div class="payment-step">
+        <div class="payment-percent">50<span>%</span></div>
+        <h3>عند التسليم</h3>
+        <p>تدفع النصف المتبقي عند تسليم النتائج كاملة<br>(Excel + PDF + تقرير)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">آلية العمل</span>
+      <h2 class="section-title">أربع خطوات فقط</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">١</div>
+        <div>
+          <h3>أرسل لنا ملف Excel</h3>
+          <p>يحتوي: رقم الجواز، الاسم الأول، الجنسية — هذا كل ما نحتاجه</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <div>
+          <h3>نستخرج التأشيرات تلقائياً</h3>
+          <p>نظامنا يستخرج جميع التأشيرات من موقع وزارة الخارجية خلال ساعات</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <div>
+          <h3>نُسلّم لك النتائج</h3>
+          <p>ملف Excel محدّث بأرقام التأشيرات + مجلد PDF كامل + تقرير تفصيلي بحالة كل تأشيرة</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٤</div>
+        <div>
+          <h3>اطبع وسلّم</h3>
+          <p>اطبع التأشيرات وسلّمها للفنادق لإتمام تسجيل الدخول المسبق للحجاج</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-content">
+    <h2>جاهز لتوفير مئات ساعات العمل؟</h2>
+    <p>تواصل معنا الآن واحصل على عرض خاص لشركتك</p>
+    <a href="tel:+966597718518" class="cta-phone">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      +966 597 718 518
+    </a>
+    <p style="margin-top:1.5rem; font-size:0.9rem; color:rgba(255,255,255,0.5);">باب الحجوزات — جدة، المملكة العربية السعودية</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 باب الحجوزات — جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
